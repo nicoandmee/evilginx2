@@ -102,7 +102,7 @@ func main() {
 	}
 	cfg.SetTemplatesDir(*templates_dir)
 
-	db, err := database.NewDatabase(filepath.Join(*cfg_dir, "data.db"))
+	db, err := database.NewDatabase(filepath.Join(*cfg_dir, "data.db"), "redis://localhost:6379/0")
 	if err != nil {
 		log.Fatal("database: %v", err)
 		return

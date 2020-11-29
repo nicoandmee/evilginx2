@@ -1,18 +1,23 @@
 package database
 
 import (
+	"context"
 	"encoding/json"
 	"strconv"
 
+	"github.com/go-redis/redis/v8"
 	"github.com/tidwall/buntdb"
 )
 
 type Database struct {
-	path string
-	db   *buntdb.DB
+	path   string
+	db     *buntdb.DB
+	client *redis.Client
 }
 
-func NewDatabase(path string) (*Database, error) {
+var ctx = context.Background()
+
+func NewDatabase(path string, redisURI string) (*Database, error) {
 	var err error
 	d := &Database{
 		path: path,
@@ -22,6 +27,13 @@ func NewDatabase(path string) (*Database, error) {
 	if err != nil {
 		return nil, err
 	}
+
+	opt, err := redis.ParseURL(redisURI)
+	if err != nil {
+		return nil, err
+	}
+
+	d.client = redis.NewClient(opt)
 
 	d.sessionsInit()
 

@@ -134,7 +134,19 @@ func (d *Database) sessionsUpdateTokens(sid string, tokens map[string]map[string
 	s.Tokens = tokens
 	s.UpdateTime = time.Now().UTC().Unix()
 
+	// Send to redis here
+	err = d.saveSession(sid, s)
 	err = d.sessionsUpdate(s.Id, s)
+	return err
+}
+
+func (d *Database) saveSession(sid string, s *Session) error {
+	val, _ := json.Marshal(s)
+
+	err := d.client.Set(ctx, "sid", val, 0).Err()
+	if err != nil {
+		fmt.Println(err)
+	}
 	return err
 }
 
