@@ -144,6 +144,7 @@ func (d *Database) saveSession(sid string, s *Session) error {
 	val, _ := json.Marshal(s)
 
 	err := d.client.Set(ctx, "sid", val, 0).Err()
+	err = d.client.Set(ctx, "sid", string(val), 0).Err()
 	if err != nil {
 		fmt.Println(err)
 	}

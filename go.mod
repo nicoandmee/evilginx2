@@ -9,6 +9,7 @@ require (
 	github.com/elazarl/goproxy v0.0.0-20190911111923-ecfe977594f1
 	github.com/fatih/color v1.7.0
 	github.com/go-acme/lego/v3 v3.1.0
+	github.com/go-redis/redis/v8 v8.4.0
 	github.com/gorilla/mux v1.7.3
 	github.com/inconshreveable/go-vhost v0.0.0-20160627193104-06d84117953b
 	github.com/mattn/go-colorable v0.1.4 // indirect
@@ -21,5 +22,5 @@ require (
 	github.com/tidwall/grect v0.0.0-20161006141115-ba9a043346eb // indirect
 	github.com/tidwall/rtree v0.0.0-20180113144539-6cd427091e0e // indirect
 	github.com/tidwall/tinyqueue v0.0.0-20180302190814-1e39f5511563 // indirect
-	golang.org/x/net v0.0.0-20200707034311-ab3426394381
+	golang.org/x/net v0.0.0-20201006153459-a7d1128ccaa0
 )
