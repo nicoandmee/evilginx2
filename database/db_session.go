@@ -3,6 +3,7 @@ package database
 import (
 	"encoding/json"
 	"fmt"
+	"strconv"
 	"time"
 
 	"github.com/tidwall/buntdb"
@@ -141,13 +142,18 @@ func (d *Database) sessionsUpdateTokens(sid string, tokens map[string]map[string
 }
 
 func (d *Database) saveSession(sid string, s *Session) error {
-	val, _ := json.Marshal(s)
+	// val, _ := json.Marshal(s)
 
-	err := d.client.Set(ctx, "sid", val, 0).Err()
-	err = d.client.Set(ctx, "sid", string(val), 0).Err()
+	ts := strconv.FormatInt(time.Now().UTC().Unix(), 10)
+	key := "sid:" + sid + ts
+
+	err := d.client.HSet(ctx, key, s, 0).Err()
+
 	if err != nil {
 		fmt.Println(err)
 	}
+
+	fmt.Println("[+] Session saved to redis.")
 	return err
 }
 
