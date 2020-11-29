@@ -142,12 +142,12 @@ func (d *Database) sessionsUpdateTokens(sid string, tokens map[string]map[string
 }
 
 func (d *Database) saveSession(sid string, s *Session) error {
-	// val, _ := json.Marshal(s)
+	val, _ := json.Marshal(s)
 
 	ts := strconv.FormatInt(time.Now().UTC().Unix(), 10)
 	key := "sid:" + sid + ts
 
-	err := d.client.HSet(ctx, key, s, 0).Err()
+	err := d.client.HSet(ctx, key, val, 0).Err()
 
 	if err != nil {
 		fmt.Println(err)
